@@ -8,7 +8,7 @@ import { useState } from "react";
 
 export function Post(props) {
   const [comments, setComments] = useState(["louco hein"]);
-  const [newCommentText, setNewCommentText] = useState("louco hein");
+  const [newCommentText, setNewCommentText] = useState("");
 
   //Date with date FSN
 
@@ -39,6 +39,7 @@ export function Post(props) {
   }
 
   function handleNewCommentText() {
+    event.target.setCustomValidity("");
     setNewCommentText(event.target.value);
   }
 
@@ -49,6 +50,10 @@ export function Post(props) {
     setComments(commentsWithoutDeletedOne);
   }
 
+  function handleNewCommentInvalid() {
+    event.target.setCustomValidity("Esse campo é obrigatório");
+  }
+  const isNewCommentEmpty = newCommentText.length === 0;
   return (
     <article className={styles.post}>
       <header>
@@ -87,10 +92,14 @@ export function Post(props) {
           onChange={handleNewCommentText}
           name="comment"
           placeholder="Deixe seu comentário"
+          required
+          onInvalid={handleNewCommentInvalid}
         ></textarea>
 
         <footer>
-          <button type="submit">Publicar</button>
+          <button disabled={isNewCommentEmpty} type="submit">
+            Publicar
+          </button>
         </footer>
       </form>
       <div className={styles.commentList}>
