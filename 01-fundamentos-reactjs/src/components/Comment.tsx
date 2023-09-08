@@ -4,7 +4,12 @@ import styles from "./Comment.module.css";
 
 import { ThumbsUp, Trash } from "phosphor-react";
 
-export function Comment(props) {
+interface CommentProps {
+  content: string;
+  deleteComment: (comment: string) => void;
+}
+
+export function Comment(props: CommentProps) {
   const [likeCount, setLikeCount] = useState(0);
 
   function handleLikeCommment() {
