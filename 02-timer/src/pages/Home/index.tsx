@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as zod from "zod";
 import { useState } from "react";
-
+//email fixed test
 import {
   CountdownContainer,
   FormContainer,
@@ -51,7 +51,6 @@ export function Home() {
       task: data.task,
       minutesAmount: data.minutesAmount,
     };
-
     setCycles((state) => [...state, newCycle]);
     setActiveCycleId(id);
 
