@@ -1,4 +1,8 @@
 import { Play } from "phosphor-react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as zod from "zod";
+
 import {
   CountdownContainer,
   FormContainer,
@@ -9,16 +13,47 @@ import {
   TaskInput,
 } from "./styles";
 
+// interface NewCycleFormData {
+//   task: string;
+//   minutesAmount: number;
+// }
+
+type NewCycleFormData = zod.infer<typeof newCycleFormValidationSchema>;
+
+const newCycleFormValidationSchema = zod.object({
+  task: zod.string().min(1, "Informe a tarefa"),
+  minutesAmount: zod
+    .number()
+    .min(5, "Valor mínimo permitido é 5")
+    .max(60, "Valor máximo permitido é 60"),
+});
+
 export function Home() {
+  const { register, handleSubmit, watch } = useForm<NewCycleFormData>({
+    resolver: zodResolver(newCycleFormValidationSchema),
+    defaultValues: {
+      task: "",
+      minutesAmount: 0,
+    },
+  });
+
+  function handleCreateNewCycle(data: NewCycleFormData) {
+    data;
+  }
+
+  //watch if the content of a specific input changes
+  const task = watch("task");
+
   return (
     <HomeContainer>
       <form>
-        <FormContainer>
+        <FormContainer onSubmit={handleSubmit(handleCreateNewCycle)}>
           <label htmlFor="task">Vou trabalhar em</label>
           <TaskInput
             id="task"
             list="task-suggestion"
             placeholder="Dê um nome para o seu projeto"
+            {...register("task")}
           />
           <datalist id="task-suggestion">
             <option value="Projeto 1" />
@@ -34,6 +69,7 @@ export function Home() {
             step={5}
             min={5}
             max={60}
+            {...register("minutesAmount", { valueAsNumber: true })}
           />
           <span>minutos.</span>
         </FormContainer>
@@ -44,7 +80,7 @@ export function Home() {
           <span>0</span>
           <span>0</span>
         </CountdownContainer>
-        <StartCountdownButton type="submit">
+        <StartCountdownButton disabled={!task} type="submit">
           Começar <Play />
         </StartCountdownButton>
       </form>
