@@ -62,7 +62,7 @@ const STATUS_COLORS = {
 interface StatusProps {
   statuscolor: keyof typeof STATUS_COLORS;
 }
-
+//to forward props to dom so we can render inside the before the color
 export const Status = styled.span.withConfig({
   shouldForwardProp: (prop) => prop === "statuscolor" || prop === "children",
 })<StatusProps>`
