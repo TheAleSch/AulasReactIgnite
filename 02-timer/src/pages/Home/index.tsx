@@ -33,7 +33,12 @@ export function Home() {
     },
   });
 
-  const { handleSubmit, watch } = NewNewCycleForm;
+  const { handleSubmit, watch, reset } = NewNewCycleForm;
+
+  function handleCreateNewCycle(data: NewCycleFormData) {
+    createNewCycle(data);
+    reset();
+  }
 
   type NewCycleFormData = zod.infer<typeof newCycleFormValidationSchema>;
 
@@ -43,7 +48,7 @@ export function Home() {
 
   return (
     <HomeContainer>
-      <form onSubmit={handleSubmit(createNewCycle)}>
+      <form onSubmit={handleSubmit(handleCreateNewCycle)}>
         <FormProvider {...NewNewCycleForm}>
           <NewCycleForm />
         </FormProvider>
