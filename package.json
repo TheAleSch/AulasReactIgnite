@@ -4,6 +4,10 @@
     "date-fns": "^2.30.0",
     "immer": "^10.0.2",
     "react-hook-form": "^7.46.1",
+    "styled-components": "^6.1.8",
     "zod": "^3.22.2"
+  },
+  "devDependencies": {
+    "@types/styled-components": "^5.1.34"
   }
 }
